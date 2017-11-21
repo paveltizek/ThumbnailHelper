@@ -20,7 +20,11 @@ class Generator extends AbstractGenerator
 	{
 		$image = Nette\Image::fromFile($this->src);
 		$image->resize($this->width, $this->height, $this->crop ? Nette\Image::EXACT : Nette\Image::FIT);
-		$image->save($this->desc);
+		try{
+			$image->save($this->desc);
+		}cathc(Exception $e){
+			
+		}
 	}
 
 }
