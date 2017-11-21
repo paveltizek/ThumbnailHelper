@@ -1,7 +1,7 @@
 <?php
 
 namespace Kollarovic\Thumbnail;
-
+use Exception;
 use Nette;
 
 
@@ -22,7 +22,7 @@ class Generator extends AbstractGenerator
 		$image->resize($this->width, $this->height, $this->crop ? Nette\Image::EXACT : Nette\Image::FIT);
 		try{
 			$image->save($this->desc);
-		}cathc(Exception $e){
+		}catch(Exception $e){
 			
 		}
 	}
