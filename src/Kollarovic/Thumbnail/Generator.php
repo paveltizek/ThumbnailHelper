@@ -18,13 +18,16 @@ class Generator extends AbstractGenerator
  	 */
 	protected function createThumb()
 	{
-		$image = Nette\Image::fromFile($this->src);
-		$image->resize($this->width, $this->height, $this->crop ? Nette\Image::EXACT : Nette\Image::FIT);
-		$image->sharpen();
-		try{
-			$image->save($this->desc);
-		}catch(Exception $e){
-			
+		try {
+			$image = Nette\Image::fromFile($this->src);
+			$image->resize($this->width, $this->height, $this->crop ? Nette\Image::EXACT : Nette\Image::FIT);
+			$image->sharpen();
+			try {
+				$image->save($this->desc);
+			} catch (Exception $e) {
+
+			}
+		} catch (Nette\Utils\UnknownImageFileException $e) {
 		}
 	}
 
