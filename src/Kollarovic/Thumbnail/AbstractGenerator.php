@@ -68,6 +68,7 @@ abstract class AbstractGenerator
 	public function thumbnail($src, $width, $height = NULL, $crop = false )
 	{
 		$this->src = $this->wwwDir . '/' . $src;
+
 		$this->width = $width;
 		$this->height = $height;
 		$this->crop = $crop;
@@ -85,7 +86,10 @@ abstract class AbstractGenerator
 			clearstatcache();
 		}
 
-		return $this->httpRequest->url->basePath . $thumbRelPath;
+		if (file_exists($this->wwwDir . '/' . $thumbRelPath)){
+            return $this->httpRequest->url->basePath . $thumbRelPath;
+        }
+        return $src;
 	}
 
 

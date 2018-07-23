@@ -21,14 +21,15 @@ class Generator extends AbstractGenerator
 		try {
 
 			$image = Nette\Utils\Image::fromFile($this->src);
-			$image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
-			$image->sharpen();
-			try {
-				$image->save($this->desc);
-			} catch (Exception $e) {
-
-			}
-		} catch (Nette\Utils\UnknownImageFileException $e) {
+            if ($image->width > $this->width) {
+                $image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
+                $image->sharpen();
+                try {
+                    $image->save($this->desc);
+                } catch (Exception $e) {
+                }
+            }
+        } catch (Nette\Utils\UnknownImageFileException $e) {
 		}
 	}
 
