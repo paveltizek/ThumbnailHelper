@@ -87,7 +87,8 @@ abstract class AbstractGenerator
 		}
 
 		if (file_exists($this->wwwDir . '/' . $thumbRelPath)){
-            return $this->httpRequest->url->basePath . $thumbRelPath;
+            $str = $this->httpRequest->url->basePath . $thumbRelPath;
+            return $str;
         }
         return $src;
 	}
@@ -120,8 +121,9 @@ abstract class AbstractGenerator
 		$md5 = md5($this->src);
 		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
-		$replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
-		return str_replace($search, $replace, $this->thumbPathMask);
+		$replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], 'webp', $md5Dir);
+        $str_replace = str_replace($search, $replace, $this->thumbPathMask);
+        return $str_replace;
 	}
 
 
