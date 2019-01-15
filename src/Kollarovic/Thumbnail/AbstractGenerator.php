@@ -42,6 +42,8 @@ abstract class AbstractGenerator
 	/** @var string */
 	private $placeholder;
 
+	/** @var bool */
+	protected $disableWebp;
 
 	/**
 	 * @param string
@@ -65,8 +67,9 @@ abstract class AbstractGenerator
 	 * @param bool
 	 * @return string
 	 */
-	public function thumbnail($src, $width, $height = NULL, $crop = false )
+	public function thumbnail($src, $width, $height = NULL, $crop = false, $disableWebp = false)
 	{
+	    $this->disableWebp = $disableWebp;
 		$this->src = $this->wwwDir . '/' . $src;
 
 		$this->width = $width;
@@ -87,8 +90,7 @@ abstract class AbstractGenerator
 		}
 
 		if (file_exists($this->wwwDir . '/' . $thumbRelPath)){
-            $str = $this->httpRequest->url->basePath . $thumbRelPath;
-            return $str;
+            return $this->httpRequest->url->basePath . $thumbRelPath;
         }
         return $src;
 	}
@@ -121,9 +123,12 @@ abstract class AbstractGenerator
 		$md5 = md5($this->src);
 		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
-		$replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], 'webp', $md5Dir);
-        $str_replace = str_replace($search, $replace, $this->thumbPathMask);
-        return $str_replace;
+        if ($this->disableWebp) {
+            $replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
+        } else {
+            $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5Dir);
+        }
+        return str_replace($search, $replace, $this->thumbPathMask);
 	}
 
 

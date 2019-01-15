@@ -25,7 +25,11 @@ class Generator extends AbstractGenerator
                 $image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
                 $image->sharpen();
                 try {
-                    imagewebp($image->getImageResource(), $this->desc);
+                    if ($this->disableWebp) {
+                        $image->save($this->desc);
+                    }else{
+                        imagewebp($image->getImageResource(), $this->desc);
+                    }
                 } catch (Exception $e) {
                 }
             }
