@@ -46,7 +46,7 @@ abstract class AbstractGenerator
 	protected $disableWebp;
 
     /** @var bool */
-    private $useWebP;
+    protected $useWebP;
 
     /**
 	 * @param string
