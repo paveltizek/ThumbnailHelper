@@ -45,7 +45,10 @@ abstract class AbstractGenerator
 	/** @var bool */
 	protected $disableWebp;
 
-	/**
+    /** @var bool */
+    private $useWebP;
+
+    /**
 	 * @param string
 	 * @param Nette\Http\IRequest
 	 * @param string
@@ -57,6 +60,13 @@ abstract class AbstractGenerator
 		$this->httpRequest = $httpRequest;
 		$this->thumbPathMask = $thumbPathMask;
 		$this->placeholder = $placeholder;
+        $this->useWebP = false;
+
+        if (array_key_exists('HTTP_ACCEPT', $_SERVER)) {
+            if (strpos($_SERVER["HTTP_ACCEPT"], 'image/webp') !== false) {
+                $this->useWebP = true;
+            }
+        }
 	}
 
 
@@ -69,6 +79,8 @@ abstract class AbstractGenerator
 	 */
 	public function thumbnail($src, $width, $height = NULL, $crop = false, $disableWebp = false)
 	{
+
+
 	    $this->disableWebp = $disableWebp;
 		$this->src = $this->wwwDir . '/' . $src;
 
@@ -123,7 +135,7 @@ abstract class AbstractGenerator
 		$md5 = md5($this->src);
 		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
-        if ($this->disableWebp) {
+        if ($this->disableWebp || !$this->useWebP) {
             $replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
         } else {
             $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5Dir);

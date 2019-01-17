@@ -19,13 +19,12 @@ class Generator extends AbstractGenerator
 	protected function createThumb()
 	{
 		try {
-
 			$image = Nette\Utils\Image::fromFile($this->src);
             if ($image->width > $this->width) {
                 $image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
                 $image->sharpen();
                 try {
-                    if ($this->disableWebp) {
+                    if ($this->disableWebp || !$this->useWebP) {
                         $image->save($this->desc);
                     }else{
                         imagewebp($image->getImageResource(), $this->desc);
