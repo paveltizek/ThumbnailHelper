@@ -27,10 +27,15 @@ class Generator extends AbstractGenerator
                     if ($this->disableWebp || !$this->useWebP) {
                         $image->save($this->desc);
                     }else{
-                        imagewebp($image->getImageResource(), $this->desc);
+//                        imagewebp($image->getImageResource(), $this->desc);
                     }
                 } catch (Exception $e) {
                 }
+
+            }
+            if ($this->disableWebp || !$this->useWebP) {
+            }else{
+                imagewebp($image->getImageResource(), $this->desc);
             }
         } catch (Nette\Utils\UnknownImageFileException $e) {
 		}
