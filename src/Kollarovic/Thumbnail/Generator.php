@@ -20,9 +20,10 @@ class Generator extends AbstractGenerator
 	{
 		try {
 			$image = Nette\Utils\Image::fromFile($this->src);
+			$image->sharpen();
             if ($image->width > $this->width) {
                 $image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
-                $image->sharpen();
+
                 try {
                     if ($this->disableWebp || !$this->useWebP) {
                         $image->save($this->desc);
@@ -35,7 +36,9 @@ class Generator extends AbstractGenerator
             }
             if ($this->disableWebp || !$this->useWebP) {
             }else{
-                imagewebp($image->getImageResource(), $this->desc);
+                $img = $image->getImageResource();
+                imagepalettetotruecolor($img);
+                imagewebp($img, $this->desc);
             }
         } catch (Nette\Utils\UnknownImageFileException $e) {
 		}
