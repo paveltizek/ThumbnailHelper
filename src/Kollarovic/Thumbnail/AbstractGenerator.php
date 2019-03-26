@@ -63,7 +63,7 @@ abstract class AbstractGenerator
         $this->useWebP = false;
 
         if (array_key_exists('HTTP_ACCEPT', $_SERVER)) {
-            if (strpos($_SERVER["HTTP_ACCEPT"], 'image/webp') !== false) {
+            if (function_exists('imagewebp') && strpos($_SERVER["HTTP_ACCEPT"], 'image/webp') !== false) {
                 $this->useWebP = true;
             }
         }
