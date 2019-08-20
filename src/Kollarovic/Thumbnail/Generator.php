@@ -3,19 +3,20 @@
 namespace Kollarovic\Thumbnail;
 use Exception;
 use Nette;
+use Nette\Utils\Image;
 
 
 /**
-* @author  Mario Kollarovic
-*
-* Generator
-*/
+ * @author  Mario Kollarovic
+ *
+ * Generator
+ */
 class Generator extends AbstractGenerator
 {
 
 	/**
 	 * @return void
- 	 */
+	 */
 	protected function createThumb()
 	{
 		try {
@@ -41,6 +42,9 @@ class Generator extends AbstractGenerator
             }
         } catch (Nette\Utils\UnknownImageFileException $e) {
 		}
+		$image = Image::fromFile($this->src);
+		$image->resize($this->width, $this->height, $this->crop ? Image::EXACT : Image::FIT);
+		$image->save($this->desc);
 	}
 
 }

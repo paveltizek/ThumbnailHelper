@@ -2,19 +2,19 @@
 
 namespace Kollarovic\Thumbnail;
 
-use Nette,
-	Nette\Http\IRequest;
+use Nette;
+use    Nette\Http\IRequest;
 
 
 /**
-* @author  Mario Kollarovic
-*
-* AbstractGenerator
-*/
+
+ * @author  Mario Kollarovic
+ *
+ * AbstractGenerator
+ */
 abstract class AbstractGenerator
 {
-	use \Nette\SmartObject;
-	
+
 	/** @var string */
 	protected $src;
 
@@ -33,7 +33,7 @@ abstract class AbstractGenerator
 	/** @var string */
 	private $wwwDir;
 
-	/** @var Nette\Http\IRequest */
+	/** @var IRequest */
 	private $httpRequest;
 
 	/** @var string */
@@ -50,7 +50,7 @@ abstract class AbstractGenerator
 
     /**
 	 * @param string
-	 * @param Nette\Http\IRequest
+	 * @param IRequest
 	 * @param string
 	 * @param string
 	 */
@@ -105,6 +105,7 @@ abstract class AbstractGenerator
             return $this->httpRequest->url->basePath . $thumbRelPath;
         }
         return $src;
+
 	}
 
 
@@ -129,18 +130,20 @@ abstract class AbstractGenerator
 	/**
 	 * @return string
 	 */
-	private function createThumbPath() 
+	private function createThumbPath()
 	{
 		$pathinfo = pathinfo($this->src);
 		$md5 = md5($this->src);
 		$md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
+
         if ($this->disableWebp || !$this->useWebP) {
             $replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
         } else {
             $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5Dir);
         }
         return str_replace($search, $replace, $this->thumbPathMask);
+
 	}
 
 
@@ -149,8 +152,8 @@ abstract class AbstractGenerator
 	 */
 	private function createPlaceholderPath()
 	{
-		$width = $this->width===NULL ? $this->height : $this->width;
-		$height = $this->height===NULL ? $this->width : $this->height;
+		$width = $this->width === NULL ? $this->height : $this->width;
+		$height = $this->height === NULL ? $this->width : $this->height;
 		$search = array('{width}', '{height}', '{src}');
 		$replace = array($width, $height, $this->src);
 		return str_replace($search, $replace, $this->placeholder);
