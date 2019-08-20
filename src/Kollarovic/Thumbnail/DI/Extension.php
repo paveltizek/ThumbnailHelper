@@ -37,7 +37,7 @@ class Extension extends Nette\DI\CompilerExtension
 
 		if ($builder->hasDefinition('nette.latteFactory')) {
 			$definition = $builder->getDefinition('nette.latteFactory');
-			$definition->getResultDefinition()->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
+			$definition->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
 		}
 	}
 
