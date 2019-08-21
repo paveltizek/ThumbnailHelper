@@ -42,9 +42,7 @@ class Generator extends AbstractGenerator
             }
         } catch (Nette\Utils\UnknownImageFileException $e) {
 		}
-		$image = Image::fromFile($this->src);
-		$image->resize($this->width, $this->height, $this->crop ? Image::EXACT : Image::FIT);
-		$image->save($this->desc);
+
 	}
 
 }
