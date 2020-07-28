@@ -138,9 +138,9 @@ abstract class AbstractGenerator
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
 
         if ($this->disableWebp || !$this->useWebP) {
-            $replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5Dir);
+            $replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5);
         } else {
-            $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5Dir);
+            $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5);
         }
         return str_replace($search, $replace, $this->thumbPathMask);
 
