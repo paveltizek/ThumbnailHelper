@@ -102,7 +102,7 @@ abstract class AbstractGenerator
 		}
 
 		if (file_exists($this->wwwDir . '/' . $thumbRelPath)){
-            return $this->httpRequest->url->basePath . $thumbRelPath;
+            return $this->httpRequest->getUrl()->basePath . $thumbRelPath;
         }
         return $src;
 
@@ -138,13 +138,13 @@ abstract class AbstractGenerator
 		$search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
 
         if ($this->disableWebp || !$this->useWebP) {
-            $replace = array($this->width, $this->height, (int) $this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5);
+            $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5);
         } else {
             $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5);
         }
         return str_replace($search, $replace, $this->thumbPathMask);
 
-	}
+    }
 
 
 	/**

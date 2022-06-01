@@ -37,11 +37,8 @@ class Extension extends Nette\DI\CompilerExtension
             ));
 
         if ($builder->hasDefinition('nette.latteFactory')) {
-            $builder->addFactoryDefinition($this->prefix("latteFactory"))
-                ->setImplement(Nette\Bridges\ApplicationLatte\ILatteFactory::class)
-                ->getResultDefinition()
-                ->setFactory(Engine::class)
-                ->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
+            $definition = $builder->getDefinition('nette.latteFactory');
+            $definition->getResultDefinition()->addSetup('addFilter', array($config['filterName'], array($this->prefix('@thumbnail'), 'thumbnail')));
         }
     }
 
