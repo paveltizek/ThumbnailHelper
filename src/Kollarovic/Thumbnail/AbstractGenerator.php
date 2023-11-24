@@ -160,4 +160,8 @@ abstract class AbstractGenerator
 		return str_replace($search, $replace, $this->placeholder);
 	}
 
+	public function setWwwDir(string $wwwDir){
+		$this->wwwDir = $wwwDir;
+	}
+
 }
