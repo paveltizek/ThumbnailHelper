@@ -14,13 +14,14 @@ use Nette\Utils\Image;
 class Generator extends AbstractGenerator
 {
 
-	/**
-	 * @return void
-	 */
-	protected function createThumb()
-	{
-		try {
-			$image = Nette\Utils\Image::fromFile($this->src);
+    /**
+     * @return void
+     */
+    protected function createThumb()
+    {
+        try {
+            $image = Nette\Utils\Image::fromFile($this->src);
+
             if ($image->width > $this->width) {
                 $image->resize($this->width, $this->height, $this->crop ? Nette\Utils\Image::EXACT : Nette\Utils\Image::FIT);
                 $image->sharpen();
@@ -31,6 +32,7 @@ class Generator extends AbstractGenerator
 //                        imagewebp($image->getImageResource(), $this->desc);
                     }
                 } catch (Exception $e) {
+                    \Tracy\Debugger::barDump($e, '$e');
                 }
 
             }
@@ -41,8 +43,9 @@ class Generator extends AbstractGenerator
                 imagewebp($img, $this->desc);
             }
         } catch (Nette\Utils\UnknownImageFileException $e) {
-		}
+            \Tracy\Debugger::barDump($e, '$e');
+        }
 
-	}
+    }
 
 }
