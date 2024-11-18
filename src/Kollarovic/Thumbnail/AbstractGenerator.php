@@ -155,7 +155,7 @@ abstract class AbstractGenerator
         $md5Dir = $md5[0] . "/" . $md5[1] . "/" . $md5[2] . "/" . $md5;
         $search = array('{width}', '{height}', '{crop}', '{filename}', '{extension}', "{md5}");
 
-        if ($this->disableWebp || !$this->useWebP) {
+        if (($this->disableWebp || !$this->useWebP) && isset($pathinfo['extension'])) {
             $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], $pathinfo['extension'], $md5);
         } else {
             $replace = array($this->width, $this->height, (int)$this->crop, $pathinfo['filename'], 'webp', $md5);
