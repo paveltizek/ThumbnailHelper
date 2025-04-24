@@ -84,15 +84,15 @@ abstract class AbstractGenerator
     public function thumbnail($src, $width, $height = NULL, $crop = false, $disableWebp = false)
     {
 
-        if (str_contains($src, "http://") || str_contains($src, "https://")) {
+       if (str_contains($src, "http://") || str_contains($src, "https://")) {
             $parsedUrl = parse_url($src);
             $path = $parsedUrl['path'];
             $filename = basename($path);
-            $imageData = file_get_contents($src);
             if (!is_dir($this->wwwDir ."/files/downloads")){
                 mkdir($this->wwwDir ."/files/downloads");
             }
             if (!file_exists($this->wwwDir ."/files/downloads/". $filename)) {
+                $imageData = file_get_contents($src);
                 file_put_contents($this->wwwDir . "/files/downloads/" . $filename, $imageData);
             }
             $src = "/files/downloads/". $filename;
