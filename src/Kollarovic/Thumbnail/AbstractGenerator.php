@@ -67,7 +67,7 @@ abstract class AbstractGenerator
         $this->wwwDir = str_replace("/..", "", $this->wwwDir);
 
         if (array_key_exists('HTTP_ACCEPT', $_SERVER)) {
-            if (strpos($_SERVER["HTTP_ACCEPT"], 'image/webp') !== false) {
+            if (function_exists('imagewebp') && strpos($_SERVER["HTTP_ACCEPT"], 'image/webp') !== false) {
                 $this->useWebP = true;
             }
         }
